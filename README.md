@@ -35,7 +35,7 @@ The benchmark datasets and the scripts to construct them are in the folder: `Loc
 
 #### *DISCLAIMER*:
 
-The paper introduces **LocIT** as the combination of its *transfer learning* subroutine and *semi-supervised anomaly detection* subroutine. We recommend to use the subroutines separately in your own work. Therfore, both are contained in their own *pip-installable* packages.
+The paper introduces **LocIT** as the combination of a *transfer learning* subroutine and a *semi-supervised anomaly detection* subroutine. We recommend to use these subroutines separately in your own work. Therfore, both are contained in their own *pip-installable* packages!
 The transfer learning subroutine is also called **LocIT** and is implemented in the [*transfertools*](https://github.com/Vincent-Vercruyssen/transfertools) package.
 The semi-supervised anomaly detection subroutine is called **SSkNNO** and is implemented in the [*anomatools*](https://github.com/Vincent-Vercruyssen/anomatools) package.
 ```bash
