@@ -4,9 +4,9 @@ This repository contains the online supplement of the 2020 AAAI paper **Transfer
 
 The paper authors are from the [DTAI group](https://dtai.cs.kuleuven.be/) of the [KU Leuven](https://kuleuven.be/):
 
-1. [Vincent Vercruyssen](https://people.cs.kuleuven.be/~vincent.vercruyssen/)
-2. [Wannes Meert](https://people.cs.kuleuven.be/~wannes.meert/)
-3. [Jesse Davis](https://people.cs.kuleuven.be/~jesse.davis/)
+- [Vincent Vercruyssen](https://people.cs.kuleuven.be/~vincent.vercruyssen/)
+- [Wannes Meert](https://people.cs.kuleuven.be/~wannes.meert/)
+- [Jesse Davis](https://people.cs.kuleuven.be/~jesse.davis/)
 
 
 ## Abstract
@@ -23,14 +23,21 @@ DO:     assign an anomaly score to each instance in Dt
         using both Dt and a subset of Ds.
 ```
 
-The **appendix to the paper** (as well as the full conference paper) can either be accessed in `LocIT/appendix/` or via the [webpage](https://people.cs.kuleuven.be/~vincent.vercruyssen/).
+The **appendix to the paper** (and the full conference paper) can either be accessed in `LocIT/paper/` or via the [webpage](https://people.cs.kuleuven.be/~vincent.vercruyssen/).
 
 
 ## Code and data
 
-This repository contains the Python code for the **LocIT** algorithm, the Python code for some of the baseline algorithms compared in the paper, the Python code to generate the benchmark data, and the actual benchmark datasets used in the experiments.
+The Python code for the full **LocIT** algorithm is in the folder: `LocIT/models/`
 
-Pip-installable versions of the **LocIT** and **SSkNNO** algorithms from the paper can be found in the [*transfertools*](https://github.com/Vincent-Vercruyssen/transfertools) and [*anomatools*](https://github.com/Vincent-Vercruyssen/anomatools) Python packages respectively. Both packages can be installed as follows:
+The benchmark datasets and the scripts to construct them are in the folder: `LocIT/data/`
+
+
+##### *DISCLAIMER*:
+
+It is perfectly possible to use the *transfer learning* subroutine and *semi-supervised anomaly detection* subroutine of the **LocIT** algorithm independently.
+The transfer learning subroutine is also called **LocIT** and is implemented in the [*transfertools*](https://github.com/Vincent-Vercruyssen/transfertools) package.
+The semi-supervised anomaly detection subroutine is called **SSkNNO** and is implemented in the [*anomatools*](https://github.com/Vincent-Vercruyssen/anomatools) package. Both packages are *pip-installable*:
 ```bash
 pip install transfertools
 pip install anomatools
@@ -41,9 +48,6 @@ from transfertools.models import LocIT
 from anomatools.models import SSkNNO
 ```
 
-The combined **LocIT** algorithm and transfer baselines are in the folder: `LocIT/models/`
-
-The benchmark datasets and scripts to construct them are in the folder: `LocIT/data/`
 
 ## Contact
 
