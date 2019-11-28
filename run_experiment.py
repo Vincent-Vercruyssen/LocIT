@@ -22,6 +22,17 @@ from models.coral import apply_CORAL
 from models.knno import apply_kNNO
 from models.iforest import apply_iForest
 
+# for the remaining baselines, see implementations:
+#
+# HBOS --> https://github.com/Kanatoko/HBOS-python/blob/master/hbos.py
+# LOF --> https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html
+# TCA --> https://github.com/Vincent-Vercruyssen/transfertools
+# CBIT --> https://github.com/Vincent-Vercruyssen/transfertools
+# GFK --> https://github.com/jindongwang/transferlearning/tree/master/code
+# JGSA --> https://github.com/jindongwang/transferlearning/tree/master/code
+# JDA --> https://github.com/jindongwang/transferlearning/tree/master/code
+# TJM --> https://github.com/jindongwang/transferlearning/tree/master/code
+
 
 # ----------------------------------------------------------------------------
 # run experiment

@@ -47,6 +47,22 @@ from anomatools.models import SSkNNO
 ```
 
 
+## Interesting links
+
+Implementations of the remaining baselines used in the paper can be found here:
+
+algorithm | link
+--- | ---
+CBIT | [transfertools](https://github.com/Vincent-Vercruyssen/transfertools)
+TCA | [transfertools](https://github.com/Vincent-Vercruyssen/transfertools)
+GFK | [link](https://github.com/jindongwang/transferlearning/tree/master/code)
+JDA | [link](https://github.com/jindongwang/transferlearning/tree/master/code)
+TJM | [link](https://github.com/jindongwang/transferlearning/tree/master/code)
+JGSA | [link](https://github.com/jindongwang/transferlearning/tree/master/code)
+LOF | [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html)
+HBOS | [HBOS-python](https://github.com/Kanatoko/HBOS-python/blob/master/hbos.py)
+
+
 ## Contact
 
 Feel free to ask questions: [vincent.vercruyssen@kuleuven.be](mailto:vincent.vercruyssen@kuleuven.be)
