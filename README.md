@@ -30,7 +30,7 @@ The **appendix to the paper** (and the full conference paper) can either be acce
 
 The Python code for the full **LocIT** algorithm and some of the baselines used in the paper, is in the folder: `LocIT/models/`
 
-The benchmark datasets and the scripts to construct them are in the folder: `LocIT/data/`
+The zipped benchmark datasets and the script to construct them are in the folder: `LocIT/data/`
 
 
 #### *DISCLAIMER*:
