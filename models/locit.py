@@ -11,7 +11,7 @@ import numpy as np
 
 from sklearn.utils.validation import check_X_y
 from sklearn.preprocessing import StandardScaler
-from sklearn.neighbor import BallTree
+from sklearn.neighbors import BallTree
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 
@@ -88,19 +88,21 @@ def apply_LocIT(Xs, Xt, ys=None, yt=None,
     y_combo[:len(ys_trans)] = ys_trans
 
     # anomaly detection
-    source_contamination = len(np.where(ys > 0)[0]) / len(np.where(ys != 0)[0])
+    if ys.any():
+        source_contamination = len(np.where(ys > 0)[0]) / len(np.where(ys != 0)[0])
+    else:
+        source_contamination = 0.1
 
-    all_scores = _ssknno_anomaly_detection(X_combo, y_combo,
+    yt_scores = _ssknno_anomaly_detection(X_combo, y_combo, Xt,
         source_contamination, k, supervision)
-    yt_scores = all_scores[len(ys_trans):]
 
     return yt_scores
 
-def _ssknno_anomaly_detection(X, y, c, k, supervision):
+
+def _ssknno_anomaly_detection(X, y, Xt, c, k, supervision):
     """ Do the SSkNNO detection. """
 
     tol = 1e-10
-    n, _ = X.shape
 
     # construct the BallTree
     tree = BallTree(X, leaf_size=16, metric='euclidean')
@@ -111,12 +113,64 @@ def _ssknno_anomaly_detection(X, y, c, k, supervision):
     gamma = np.percentile(outlier_score, int(100 * (1.0 - c))) + tol
 
     # labels and radii
-    labels = y.copy()
+    train_labels = y.copy()
     radii = D[:, -1].flatten() + tol
 
-    # 
+    # compute neighborhood
+    D, Ixs = tree.query(Xt, k=k+1, dualtree=True)
+    nn_radii = D[:, -1].flatten()
+    Ixs_radius, D_radius = tree.query_radius(
+        Xt, r=nn_radii, return_distance=True, count_only=False)
 
-    return None
+    # compute prior
+    prior = _squashing_function(D[:, -1].flatten(), gamma)
+    
+    if not(y.any()):
+        return prior
+
+    # compute posterior
+    posterior = np.zeros(Xt.shape[0], dtype=float)
+    for i in range(Xt.shape[0]):
+        ndists = D_radius[i].copy()
+        nixs = Ixs_radius[i].copy()
+        nn = len(ndists)
+
+        # labels of the neighbors, weights
+        labels = train_labels[nixs].copy()
+        w = np.power(1.0 / (ndists + tol), 2)
+
+        # supervised score component
+        ixl = np.where(labels != 0.0)[0]
+        if len(ixl) > 0:
+            # supervised score
+            if supervision == 'loose':
+                ixa = np.where(labels > 0)[0]
+                Ss = np.sum(w[ixa]) / np.sum(w[ixl])
+
+            # weight of the supervised component
+            # --> the number of labeled instances that also contain this instance as their neighbor
+            reverse_nn = np.where(ndists <= radii[nixs])[0]
+            reverse_nn = np.intersect1d(ixl, reverse_nn)
+            Ws = len(reverse_nn) / nn
+
+            # supervised score, new idea:
+            if supervision == 'strict':
+                if len(reverse_nn) > 0:
+                    ixa = np.where(labels[reverse_nn] > 0)[0]
+                    Ss = np.sum(w[ixa]) / np.sum(w[reverse_nn])
+                else:
+                    Ss = 0.0
+
+        else:
+            # supervised plays no role
+            Ss = 0.0
+            Ws = 0.0
+
+        # combine supervised and unsupervised
+        posterior[i] = (1.0 - Ws) * prior[i] + Ws * Ss
+
+    return posterior
+
 
 def _instance_transfer(Xs, Xt, ys, psi, train_selection):
     """ Do the instance transfer. """
@@ -209,6 +263,7 @@ def _instance_transfer(Xs, Xt, ys, psi, train_selection):
 
     return ixt
 
+
 def _optimal_transfer_classifier(train, labels):
     """ optimal transfer classifier based on SVC """
 
@@ -226,6 +281,7 @@ def _optimal_transfer_classifier(train, labels):
     
     # return classifier
     return clf
+
 
 def _squashing_function(x, p):
     """ Compute the value of x under squashing function with parameter p. """
