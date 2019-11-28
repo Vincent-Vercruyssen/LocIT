@@ -28,16 +28,14 @@ The **appendix to the paper** (and the full conference paper) can either be acce
 
 ## Code and data
 
-The Python code for the full **LocIT** algorithm along with the baselines used is in the folder: `LocIT/models/`
+The Python code for the full **LocIT** algorithm and with some of the baselines used in the paper, is in the folder: `LocIT/models/`
 
 The benchmark datasets and the scripts to construct them are in the folder: `LocIT/data/`
 
 
 #### *DISCLAIMER*:
 
-The paper introduces **LocIT** as the combination of a *transfer learning* subroutine and a *semi-supervised anomaly detection* subroutine. We recommend to use these subroutines separately in your own work. Therfore, both are contained in their own *pip-installable* packages!
-The transfer learning subroutine is also called **LocIT** and is implemented in the [*transfertools*](https://github.com/Vincent-Vercruyssen/transfertools) package.
-The semi-supervised anomaly detection subroutine is called **SSkNNO** and is implemented in the [*anomatools*](https://github.com/Vincent-Vercruyssen/anomatools) package.
+The core contributions of our paper are the **LocIT** transfer learning and **SSkNNO** semi-supervised anomaly detection algorithms. Although the source code of these algorithms is also available in this repository for completeness, the recommended way to use these algorithms in your own work is to import them from the publicly available and *pip-installable* [*transfertools*](https://github.com/Vincent-Vercruyssen/transfertools) and [*anomatools*](https://github.com/Vincent-Vercruyssen/anomatools) packages.
 ```bash
 pip install transfertools
 pip install anomatools
